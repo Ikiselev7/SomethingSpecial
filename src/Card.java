@@ -28,6 +28,16 @@ public class Card {
     private int currentX;
     private int currentY;
 
+    public boolean isSelected() {
+        return selected;
+    }
+
+    public void select() {
+        this.selected = true;
+    }
+
+    private boolean selected;
+
     Card link;
 
     // constructor
@@ -43,7 +53,12 @@ public class Card {
         currentY = y;
         // clear rectangle, draw border
         g.clearRect(x, y, width, height);
-        g.setColor(Color.black);
+        if(selected==false){
+            g.setColor(Color.black);
+        }else{
+            g.setColor(Color.green);
+            selected = false;
+        }
         g.drawRect(x, y, width, height);
         // draw body of card
         if (isFaceUp()) {

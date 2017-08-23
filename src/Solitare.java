@@ -12,8 +12,8 @@ public class Solitare extends Applet {
     static SuitPile suitPile[];
     static CardPile allPiles[];
 
-    Card cardToMove;
-    CardPile moveFromPile;
+    static Card cardToMove;
+    static CardPile moveFromPile;
 
 
 
@@ -43,7 +43,16 @@ public class Solitare extends Applet {
 
     @Override
     public boolean mouseDown(Event evt, int x, int y) {
-        if(cardToMove==null) {
+        for (int i = 0; i < 13; i++) {
+            if (allPiles[i].includes(x, y)) {
+                allPiles[i].select(x, y);
+                repaint();
+                return true;
+            }
+        }
+        return true;
+
+        /*if(cardToMove==null) {
             if (discardPile.includes(x, y)) {
                 cardToMove = discardPile.preSelect(x, y);
                 moveFromPile = discardPile;
@@ -76,7 +85,7 @@ public class Solitare extends Applet {
             cardToMove = null;
             repaint();
             return true;
-        }
+        }*/
     }
 }
 
