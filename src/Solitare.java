@@ -12,8 +12,8 @@ public class Solitare extends Applet {
     static SuitPile suitPile[];
     static CardPile allPiles[];
 
-    static Card selectedCard;
-    static CardPile selectedPile;
+    private static Card selectedCard;
+    private static CardPile selectedPile;
 
     public static void select(Card selCard,CardPile selPile){
         selectedCard = selCard;
