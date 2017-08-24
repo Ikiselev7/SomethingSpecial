@@ -61,7 +61,6 @@ public class Card {
             g.setColor(Color.black);
         }else{
             g.setColor(Color.green);
-            selected = false;
         }
         g.drawRect(x, y, width, height);
         // draw body of card
