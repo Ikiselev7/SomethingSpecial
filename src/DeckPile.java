@@ -48,5 +48,6 @@ class DeckPile extends CardPile {
         }
         Solitare.discardPile.push(this.pop());
     }
+
 }
 

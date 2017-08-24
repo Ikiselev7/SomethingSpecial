@@ -52,12 +52,6 @@ class CardPile {
         // do nothing
     }
 
-
-    public Card preSelect(final int tx, final int ty) {
-        // do nothing
-        return null;
-    }
-
     public void display(final Graphics g) {
         g.setColor(Color.black);
         if (firstCard == null) {

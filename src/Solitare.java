@@ -12,10 +12,20 @@ public class Solitare extends Applet {
     static SuitPile suitPile[];
     static CardPile allPiles[];
 
-    static Card cardToMove;
-    static CardPile moveFromPile;
+    static Card selectedCard;
+    static CardPile selectedPile;
 
+    public static void select(Card selCard,CardPile selPile){
+        selectedCard = selCard;
+        selectedCard.select();
+        selectedPile = selPile;
+    }
 
+    public static void deselect(){
+        selectedPile = null;
+        if(selectedCard!=null) selectedCard.deselect();
+        selectedCard = null;
+    }
 
     @Override
     public void init() {
@@ -45,47 +55,16 @@ public class Solitare extends Applet {
     public boolean mouseDown(Event evt, int x, int y) {
         for (int i = 0; i < 13; i++) {
             if (allPiles[i].includes(x, y)) {
-                allPiles[i].select(x, y);
+                if(selectedCard==null){
+                    allPiles[i].select(x, y);
+                }else{
+                    selectedPile.move(selectedCard,allPiles[i]);
+                }
                 repaint();
                 return true;
             }
         }
         return true;
-
-        /*if(cardToMove==null) {
-            if (discardPile.includes(x, y)) {
-                cardToMove = discardPile.preSelect(x, y);
-                moveFromPile = discardPile;
-                repaint();
-                return true;
-            }
-
-            if (deckPile.includes(x, y)) {
-                deckPile.select(x, y);
-                repaint();
-                return true;
-            }
-
-            for (int i = 0; i < 7; i++) {
-                if (tableau[i].includes(x, y)) {
-                    cardToMove = tableau[i].preSelect(x, y);
-                    moveFromPile = tableau[i];
-                    repaint();
-                    return true;
-                }
-            }
-            return true;
-        }else {
-            for (int i = 2; i <13; i++) {
-                if(allPiles[i].includes(x,y)&&allPiles[i].canTake(cardToMove)){
-                    moveFromPile.move(cardToMove,allPiles[i]);
-                }
-            }
-            moveFromPile = null;
-            cardToMove = null;
-            repaint();
-            return true;
-        }*/
     }
 }
 

@@ -36,6 +36,10 @@ public class Card {
         this.selected = true;
     }
 
+    public void deselect(){
+        this.selected = false;
+    }
+
     private boolean selected;
 
     Card link;

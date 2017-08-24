@@ -59,24 +59,29 @@ class TablePile extends CardPile {
 
     @Override
     public void move(Card aCard, CardPile targetPile) {
-        //target.push(pop());
-        CardPile movingPile = new CardPile(0,0);
-        while(true){
-            Card movingCard = this.pop();
-            movingPile.push(movingCard);
-            if(movingCard==aCard){
-                break;
-            }
-        }
-        while(!movingPile.empty()){
-            targetPile.push(movingPile.pop());
-            if(movingPile.top()!=null&&!targetPile.canTake(movingPile.top())){
-                movingPile.push(targetPile.pop());
-                while (!movingPile.empty()){
-                    this.push(movingPile.pop());
+        if (targetPile.canTake(aCard)){
+            CardPile movingPile = new CardPile(0,0);
+            while(true){
+                Card movingCard = this.pop();
+                movingPile.push(movingCard);
+                if(movingCard==aCard){
+                    break;
                 }
             }
+            while(!movingPile.empty()){
+                targetPile.push(movingPile.pop());
+                if(movingPile.top()!=null&&!targetPile.canTake(movingPile.top())){
+                    movingPile.push(targetPile.pop());
+                    while (!movingPile.empty()){
+                        this.push(movingPile.pop());
+                    }
+                }
+            }
+            Solitare.deselect();
+        }else{
+            Solitare.deselect();
         }
+
     }
 
     private Card find(Card aCard, int tx, int ty){
@@ -91,25 +96,13 @@ class TablePile extends CardPile {
 
     @Override
     public void select(int tx, int ty) {
-        if(Solitare.cardToMove==null){
-            if (this.empty()) {
-                return;
-            }else{
-                Card selectedCard = find(top(),tx,ty);
-                if(!selectedCard.isFaceUp()) selectedCard = top();
-                Solitare.cardToMove = selectedCard;
-                selectedCard.select();
-                Solitare.moveFromPile = this;
-            }
-        }else{
-            if(this.canTake(Solitare.cardToMove)){
-                Solitare.moveFromPile.move(Solitare.cardToMove,this);
-            }
-            Solitare.cardToMove = null;
-            Solitare.moveFromPile = null;
+        if (this.empty()) {
             return;
+        }else{
+            Card selectedCard = find(top(),tx,ty);
+            if(!selectedCard.isFaceUp()) selectedCard = top();
+            Solitare.select(selectedCard, this);
         }
-
     }
 
     private int stackDisplay(Graphics g, Card aCard) {

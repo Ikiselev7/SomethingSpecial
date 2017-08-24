@@ -17,23 +17,19 @@ class DiscardPile extends CardPile {
 
     @Override
     public void move(Card aCard, CardPile targetPile) {
-        targetPile.push(pop());
+        if(targetPile.canTake(this.top())) {
+            targetPile.push(pop());
+            Solitare.deselect();
+        }else{
+            Solitare.deselect();
+        }
     }
 
     @Override
     public void select(int tx, int ty) {
-        if(Solitare.cardToMove!=null){
-            Solitare.cardToMove = null;
-            Solitare.moveFromPile = null;
-        }else {
-            if (this.empty()) {
-                return;
-            }
-            Solitare.cardToMove = this.top();
-            this.top().select();
-            Solitare.moveFromPile = this;
+        if (this.empty()) {
             return;
         }
-
+        Solitare.select(this.top(),this);
     }
 }
